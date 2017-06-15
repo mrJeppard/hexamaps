@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+pylint -rn hexamap.py readin.py > lintout
+
+echo "###############################" >> lintout
+echo "pycodestle:" >> lintout
+
+pycodestyle --first hexamap.py readin.py >> lintout
+
+
+echo "###############################" >> lintout
+echo "pydocstyle: " >> lintout
+
+pydocstyle hexamap.py readin.py >> lintout
+
+vim lintout
