@@ -21,6 +21,19 @@ class Hexamap(object):
         """Get all attribute ids."""
         return self.attributes.columns.to_list()
 
+    def set_data_nas_with_0(self):
+        """Put 0 in place of "NA" values in the data matrix."""
+        data_df = self.data
+        data_df = data_df.fillna(0)
+        self.data = data_df
+
+    def set_data_nas_with_col_median(self):
+        """Put 0 in place of "NA" values in the data matrix."""
+        data_df = self.data
+        medians = data_df.median()
+        data_df = data_df.fillna(medians)
+        self.data = data_df
+
     def data_inspection(self):
         """
         Summarizes common gatchas with clustering data.
@@ -29,7 +42,11 @@ class Hexamap(object):
         """
         return None
 
-    def fit(self, method="drl", **kwargs):
+    def run_drl(self, **kwargs):
+        """Perform Clustering on the data."""
+        return None
+
+    def run_tsne(self, **kwargs):
         """Perform Clustering on the data."""
         return None
 
@@ -64,3 +81,6 @@ class Hexamap(object):
     def onebyall_similarity(self, method="spearman"):
         """Run one by all similarity."""
         return None
+
+    def _datatype_determination(self):
+        attr_df = self.attributes
