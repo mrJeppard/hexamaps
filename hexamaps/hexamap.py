@@ -1,6 +1,7 @@
 #!/usr/bin/env python2.7
 """The hexamap class dispatches methods used in the Tumor Map pipeline."""
 
+from . import openord
 
 class Hexamap(object):
     """This object is a jumping point for relevant methods."""
@@ -16,6 +17,12 @@ class Hexamap(object):
         self.data = data
         self.attributes = attributes
         self.points = None
+        self.datatypes = None
+
+        if str(type(self.data)) != "<class 'pandas.core.frame.DataFrame'>" or \
+          str(type(self.attributes)) != "<class 'pandas.core.frame.DataFrame'>":
+            raise ValueError("Both data and attributes must be"
+                             " in a pandas DataFrame")
 
     def get_attribute_ids(self):
         """Get all attribute ids."""
@@ -44,7 +51,9 @@ class Hexamap(object):
 
     def run_drl(self, **kwargs):
         """Perform Clustering on the data."""
-        return None
+        drl = openord.OpenOrd()
+        xys = drl.fit_transform(self.data)
+        return xys
 
     def run_tsne(self, **kwargs):
         """Perform Clustering on the data."""
